@@ -24,9 +24,9 @@ var (
 
 func setHeadText(g *gocui.Gui, msg string) {
 	v, err := g.View("head")
-	if err != nil {
+	if err == nil {
 		v.Clear()
-		fmt.Fprintf(v, color.FgGreen.Text(msg))
+		fmt.Fprint(v, color.FgGreen.Text(msg))
 	}
 }
 
