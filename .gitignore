@@ -23,3 +23,5 @@ go.work
 im
 .vscode
 .idea
+*/*.log
+*.log
