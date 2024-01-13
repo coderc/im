@@ -4,6 +4,7 @@ go 1.21.6
 
 require (
 	github.com/bytedance/gopkg v0.0.0-20231219111115-a5eedbe96960
+	github.com/cloudwego/hertz v0.8.0
 	github.com/coreos/etcd v3.3.27+incompatible
 	github.com/gookit/color v1.5.4
 	github.com/rocket049/gocui v0.3.2
@@ -16,7 +17,7 @@ require (
 	github.com/bytedance/go-tagexpr/v2 v2.9.2 // indirect
 	github.com/bytedance/sonic v1.8.1 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
-	github.com/cloudwego/hertz v0.8.0 // indirect
+	github.com/cloudwego/netpoll v0.5.0 // indirect
 	github.com/coreos/go-semver v0.3.0 // indirect
 	github.com/coreos/go-systemd v0.0.0-20191104093116-d3cd4ed1dbcf // indirect
 	github.com/coreos/pkg v0.0.0-20230601102743-20bbbf26f4d8 // indirect

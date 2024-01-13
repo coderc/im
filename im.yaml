@@ -5,4 +5,4 @@ discovery:
     - localhost:2379 # 使用etcd作服务发现
   timeout: 5
 ip_config:
-  service_path: /plato/ip_dispatcher
+  service_path: /im/ip_dispatcher

@@ -37,7 +37,7 @@ func (s *Stat) Add(st *Stat) {
 }
 
 func (s *Stat) Sub(st *Stat) {
-	if s == nil {
+	if st == nil {
 		return
 	}
 	s.ConnectNum -= st.ConnectNum
