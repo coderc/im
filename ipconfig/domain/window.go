@@ -4,6 +4,7 @@ const (
 	windowSize = 5
 )
 
+// stateWindow 记录和处理某一个服务的多次状态更新，用于计算服务的active score 和 static score
 type stateWindow struct {
 	statQueue []*Stat
 	statChan  chan *Stat
@@ -21,7 +22,7 @@ func newStateWindow() *stateWindow {
 
 func (s *stateWindow) getStat() *Stat {
 	res := s.sumStat.Clone()
-	res.Avg(windowSize)
+	res.Avg(min(windowSize, float64(s.idx)))
 	return res
 }
 

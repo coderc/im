@@ -13,7 +13,7 @@ type Dispatcher struct {
 }
 
 var (
-	dp *Dispatcher
+	dp *Dispatcher // 全局服务调度器，用于定制和处理流量分配的逻辑
 )
 
 func Init() {
@@ -46,6 +46,7 @@ func Dispatch(ctx *IpConfigContext) []*EndPoint {
 	return eds
 }
 
+// getCandidateEndpoint 获取调度器当前持有的下游服务的endpoint list
 func (dp *Dispatcher) getCandidateEndpoint(ctx *IpConfigContext) []*EndPoint {
 	dp.RLock()
 	defer dp.RUnlock()
@@ -56,12 +57,14 @@ func (dp *Dispatcher) getCandidateEndpoint(ctx *IpConfigContext) []*EndPoint {
 	return candidateList
 }
 
+// delNode 下游服务下线
 func (dp *Dispatcher) delNode(event *source.Event) {
 	dp.Lock()
 	defer dp.Unlock()
 	delete(dp.candidateTable, event.Key())
 }
 
+// addNode 下游服务上线/更新
 func (dp *Dispatcher) addNode(event *source.Event) {
 	dp.Lock()
 	defer dp.Unlock()

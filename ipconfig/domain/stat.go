@@ -16,6 +16,9 @@ func (s *Stat) CalculateStaticScore() float64 {
 }
 
 func (s *Stat) Avg(num float64) {
+	if num == 0 {
+		return
+	}
 	s.ConnectNum /= num
 	s.MessageBytes /= num
 }
@@ -52,12 +55,9 @@ func decimal(val float64) float64 {
 	return math.Trunc(val*1e2+0.5) * 1e-2
 }
 
-func min(a, b, c float64) float64 {
-	m := func(i, j float64) float64 {
-		if i < j {
-			return i
-		}
-		return j
+func min[T int | int64 | int32 | float32 | float64](a, b T) T {
+	if a < b {
+		return a
 	}
-	return m(a, m(b, c))
+	return b
 }

@@ -6,6 +6,7 @@ import (
 	"github.com/coderc/im/common/discovery"
 )
 
+// eventChan 服务发现事件channel 下游服务向etcd新提交“上线/下线/更新信息”行为时触发
 var eventChan chan *Event
 
 func EventChan() <-chan *Event {
