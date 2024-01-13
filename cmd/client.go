@@ -19,5 +19,5 @@ var (
 )
 
 func clientRun(cmd *cobra.Command, args []string) {
-	client.ClientRun()
+	client.Run()
 }
