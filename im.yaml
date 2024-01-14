@@ -2,7 +2,7 @@ global:
   env: debug
 discovery:
   endpoints:
-    - localhost:2379 # 使用etcd作服务发现
+    - 172.17.0.2:2379 # 使用etcd作服务发现
   timeout: 5
 ip_config:
   service_path: /im/ip_dispatcher

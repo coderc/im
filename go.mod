@@ -1,6 +1,6 @@
 module github.com/coderc/im
 
-go 1.21.6
+go 1.18
 
 require (
 	github.com/bytedance/gopkg v0.0.0-20231219111115-a5eedbe96960
