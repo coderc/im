@@ -1,6 +1,7 @@
 package config
 
 import (
+	"strconv"
 	"time"
 
 	"os"
@@ -38,10 +39,29 @@ func IsDebug() bool {
 
 // GetEnv 获取环境变量中的值
 func GetEnv(name, value, usage string) string {
-	envVar := os.Getenv(name)
-	if envVar == "" {
+	str := os.Getenv(name)
+	if str == "" {
 		logger.Warnf("please check env var, (name: \"%s\", default: \"%s\", usage: \"%s\")", name, value, usage)
 		return value
 	}
-	return envVar
+	return str
+}
+
+func GetEnvInt32(name string, value int32, usage string) int32 {
+	vInt64 := GetEnvInt64(name, int64(value), usage)
+	return int32(vInt64)
+}
+
+func GetEnvInt64(name string, value int64, usage string) int64 {
+	str := GetEnv(name, "", usage)
+	if str == "" {
+		return value
+	}
+
+	v, err := strconv.ParseInt(str, 10, 64)
+	if err != nil {
+		logger.Warnf("ParseInt failed, name: %s, usage: %s, err: %v", name, usage, err)
+		return value
+	}
+	return v
 }

@@ -1,5 +1,7 @@
 package sdk
 
+import "net"
+
 const (
 	MsgTypeText = "text"
 )
@@ -20,12 +22,12 @@ type Message struct {
 	Session    string
 }
 
-func NewChat(serverAddr, nick, userId, sessionId string) *Chat {
+func NewChat(ip net.IP, port int, nick, userId, sessionId string) *Chat {
 	return &Chat{
 		Nick:      nick,
 		UserId:    userId,
 		SessionId: sessionId,
-		conn:      newConnect(serverAddr),
+		conn:      newConnect(ip, port),
 	}
 }
 

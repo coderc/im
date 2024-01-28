@@ -1,21 +1,53 @@
 package sdk
 
+import (
+	"encoding/json"
+	"fmt"
+	"net"
+
+	"github.com/coderc/im/common/tcp"
+)
+
 type connect struct {
-	serverAddr         string
 	sendChan, recvChan chan *Message
+	conn               *net.TCPConn
 }
 
-func newConnect(serverAddr string) *connect {
-	return &connect{
-		serverAddr: serverAddr,
-		sendChan:   make(chan *Message),
-		recvChan:   make(chan *Message),
+func newConnect(ip net.IP, port int) *connect {
+	clientConn := &connect{
+		sendChan: make(chan *Message),
+		recvChan: make(chan *Message),
 	}
+	addr := &net.TCPAddr{IP: ip, Port: port}
+	conn, err := net.DialTCP("tcp", nil, addr)
+	if err != nil {
+		fmt.Printf("DialTcp.err=%+v", err)
+		return nil
+	}
+	clientConn.conn = conn
+	go func() {
+		for {
+			data, err := tcp.ReadData(conn)
+			if err != nil {
+				fmt.Printf("ReadData err: %+v", err)
+			}
+			msg := &Message{}
+			json.Unmarshal(data, msg)
+			clientConn.recvChan <- msg
+		}
+	}()
+
+	return clientConn
 }
 
 func (c *connect) send(msg *Message) {
-	// 不做任何处理，模拟消息发送操作
-	c.recvChan <- msg
+	bytes, _ := json.Marshal(msg)
+	dataPkg := tcp.DataPkg{
+		Data: bytes,
+		Len:  uint32(len(bytes)),
+	}
+	dataPkgBytes := dataPkg.Marshal()
+	c.conn.Write(dataPkgBytes)
 }
 
 func (c *connect) recv() <-chan *Message {
@@ -23,4 +55,5 @@ func (c *connect) recv() <-chan *Message {
 }
 
 func (c *connect) close() {
+	c.conn.Close()
 }
