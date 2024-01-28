@@ -5,11 +5,11 @@ discovery:
     - 172.17.0.2:2379 # 使用etcd作服务发现
   timeout: 5
 ip_config:
-  service_path: /im/ip_dispatcher
+  service_path: /im/ip_dispatcher # 服务发现关联唯一ID
 gateway:
-  tcp_max_num: 70000
+  tcp_max_num: 70000 # gateway 最大连接数量
   epoll_channel_num: 100
   epoll_num: 8
-  epoll_wait_queue_size: 100
-  server_port: 8900
-  worker_pool_num: 1024
+  epoll_wait_queue_size: 100 # 网关等待队列最大长度
+  server_port: 8900 # 网关服务监听端口
+  worker_pool_num: 1024 # 协程池最大对象数量
