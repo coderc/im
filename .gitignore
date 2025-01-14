@@ -26,3 +26,10 @@ go.work.sum
 
 # log file
 *.log
+
+# visual studio config
+.vscode
+
+# build dist
+im
+server
